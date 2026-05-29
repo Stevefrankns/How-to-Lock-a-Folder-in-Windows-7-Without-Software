@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>How to Lock a Folder in Windows 7 Without Software</title>
+<meta content="The complete guide to locking folders in Windows 7. Compare native CMD methods, EFS encryption, and dedicated software solutions for local privacy." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&amp;family=Figtree:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+
+:root {
+  --bg: #FAFAFA;
+  --surface: #FFFFFF;
+  --surface-soft: #F2F2F2;
+  --dark: #1C1C1E;
+  --pop: #E8343A;
+  --border: #E0E0E0;
+  --text: #1C1C1E;
+  --muted: #6B6B6B;
+  --shadow: 0 22px 70px rgba(28,28,30,0.08);
+  --shadow-small: 0 10px 28px rgba(28,28,30,0.06);
+  --radius: 18px;
+  --radius-sm: 12px;
+  --font-heading: 'Fraunces', Georgia, serif;
+  --font-body: 'Figtree', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --max-reading-width: 760px;
+  --max-wide-width: 1180px;
+  --section-padding-v: 84px;
+  --transition-speed: 0.28s;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 17px; }
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background:
+    linear-gradient(90deg, rgba(28,28,30,0.025) 1px, transparent 1px) 0 0 / 72px 72px,
+    linear-gradient(rgba(28,28,30,0.02) 1px, transparent 1px) 0 0 / 72px 72px,
+    var(--bg);
+  line-height: 1.68;
+  font-weight: 400;
+  counter-reset: page-section;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  color: var(--dark);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  margin-bottom: 1rem;
+}
+h1 {
+  font-size: clamp(40px, 7vw, 68px);
+  font-weight: 900;
+  max-width: 860px;
+  margin-bottom: 1.35rem;
+}
+h2 {
+  font-size: clamp(32px, 4vw, 42px);
+  font-weight: 700;
+  margin-top: 0;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--border);
+}
+h3 { font-size: 1.45rem; margin-top: 2rem; }
+h4 { font-size: 1.05rem; letter-spacing: -0.015em; }
+
+p { margin-bottom: 1.5rem; }
+a { color: inherit; text-decoration-color: rgba(232,52,58,0.45); text-underline-offset: 4px; transition: color var(--transition-speed), text-decoration-color var(--transition-speed); }
+a:hover { color: var(--pop); text-decoration-color: var(--pop); }
+img { max-width: 100%; height: auto; display: block; border-radius: var(--radius); }
+ul, ol { margin-bottom: 1.5rem; margin-left: 1.45rem; }
+li { margin-bottom: 0.55rem; }
+code {
+  background: var(--surface-soft);
+  color: var(--dark);
+  border: 1px solid var(--border);
+  padding: 0.08rem 0.35rem;
+  border-radius: 6px;
+  font-size: 0.92em;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  transition: transform var(--transition-speed), background var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed);
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-filled {
+  background: var(--pop);
+  color: #fff;
+  border: 1.5px solid var(--pop);
+  box-shadow: 0 12px 28px rgba(232,52,58,0.22);
+}
+.btn-filled:hover { color: #fff; background: #C8252B; border-color: #C8252B; }
+.btn-outline {
+  border: 1.5px solid var(--dark);
+  color: var(--dark);
+  background: transparent;
+}
+.btn-outline:hover {
+  background: var(--dark);
+  color: #fff;
+  border-color: var(--dark);
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250,250,250,0.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  transition: box-shadow var(--transition-speed), background var(--transition-speed);
+}
+header.scrolled { box-shadow: var(--shadow-small); background: rgba(250,250,250,0.96); }
+.nav-container {
+  max-width: var(--max-wide-width);
+  margin: 0 auto;
+  padding: 0 24px;
+  min-height: 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+.site-brand,
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  color: var(--dark);
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+}
+.site-brand { font-size: 1.05rem; }
+.brand-mark {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  border-radius: 13px;
+  box-shadow: 0 10px 24px rgba(28,28,30,0.10);
+}
+.brand-text {
+  display: inline-flex;
+  gap: 0.28em;
+  align-items: baseline;
+}
+.nav-links {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+.nav-links a {
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  position: relative;
+}
+.nav-links a:hover,
+.nav-links a.active { color: var(--dark); }
+.nav-active-dot {
+  position: absolute;
+  left: 0;
+  bottom: -12px;
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  background: var(--pop);
+  transform: translateX(0);
+  transition: transform 0.35s ease, opacity 0.2s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+.mobile-toggle {
+  display: none;
+  background: var(--dark);
+  color: #fff;
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 99px;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.container { max-width: var(--max-reading-width); margin: 0 auto; padding: 0 24px; }
+.container-wide { max-width: var(--max-wide-width); margin: 0 auto; padding: 0 24px; }
+section {
+  position: relative;
+  padding: var(--section-padding-v) 0;
+  counter-increment: page-section;
+}
+.main-content > section::before {
+  content: counter(page-section, decimal-leading-zero);
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: clamp(40px, 7vw, 86px);
+  line-height: 1;
+  color: rgba(28,28,30,0.055);
+  pointer-events: none;
+}
+.bg-alt {
+  background:
+    linear-gradient(135deg, rgba(28,28,30,0.035), transparent 36%),
+    var(--surface-soft);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-editorial {
+  background: var(--bg);
+  padding: 92px 0 76px;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.hero-editorial .container {
+  max-width: var(--max-wide-width);
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
+  align-items: center;
+  gap: clamp(36px, 6vw, 70px);
+}
+.hero-copy { min-width: 0; }
+.pop-word { color: var(--pop); }
+.breadcrumb {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+}
+.hero-editorial p[style],
+.hero-editorial p {
+  color: var(--dark);
+}
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  font-size: 0.92rem;
+  color: var(--muted);
+  margin-bottom: 1.8rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--border);
+}
+.hero-stat-number { color: var(--pop); font-weight: 900; }
+.quick-answer {
+  background: var(--surface);
+  border-left: 6px solid var(--pop);
+  padding: 26px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  box-shadow: var(--shadow-small);
+  margin-bottom: 0;
+}
+.quick-answer-label {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.17em;
+  color: var(--pop);
+  margin-bottom: 10px;
+  display: block;
+  font-weight: 800;
+}
+.hero-document-visual {
+  position: relative;
+  min-height: 470px;
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 75% 18%, rgba(232,52,58,0.16), transparent 20%),
+    linear-gradient(135deg, #fff, var(--surface-soft));
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.hero-document-visual::before {
+  content: "";
+  position: absolute;
+  inset: 58px 70px;
+  border-radius: 26px;
+  background:
+    linear-gradient(var(--dark), var(--dark)) 44px 65px / 190px 14px no-repeat,
+    linear-gradient(var(--border), var(--border)) 44px 104px / 250px 8px no-repeat,
+    linear-gradient(var(--border), var(--border)) 44px 130px / 205px 8px no-repeat,
+    linear-gradient(var(--pop), var(--pop)) 44px 185px / 120px 12px no-repeat,
+    linear-gradient(var(--dark), var(--dark)) 44px 220px / 270px 10px no-repeat,
+    linear-gradient(var(--border), var(--border)) 44px 252px / 220px 8px no-repeat,
+    #fff;
+  border: 3px solid var(--dark);
+  box-shadow: 16px 16px 0 var(--dark);
+}
+.hero-document-visual::after {
+  content: "";
+  position: absolute;
+  width: 144px;
+  height: 144px;
+  right: 44px;
+  bottom: 62px;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 0 33px, var(--pop) 34px 48px, transparent 49px),
+    linear-gradient(var(--pop), var(--pop)) center 76px / 78px 18px no-repeat;
+  border: 18px solid var(--dark);
+  border-radius: 50%;
+  transform: rotate(-12deg);
+}
+
+.page-wrapper {
+  display: flex;
+  max-width: var(--max-wide-width);
+  margin: 0 auto;
+  padding: 40px 24px 0;
+  gap: 56px;
+}
+.sidebar-toc { flex: 0 0 238px; display: none; }
+@media (min-width: 940px) {
+  .sidebar-toc { display: block; }
+  .container { margin: 0; }
+}
+.toc-sticky {
+  position: sticky;
+  top: 104px;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-small);
+}
+.toc-sticky h4 {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+.toc-sticky ul { list-style: none; margin-left: 0; margin-bottom: 0; }
+.toc-sticky li { margin-bottom: 10px; }
+.toc-sticky a {
+  color: var(--muted);
+  font-size: 0.88rem;
+  display: block;
+  transition: all 0.22s;
+  border-left: 3px solid transparent;
+  padding: 6px 0 6px 12px;
+  text-decoration: none;
+}
+.toc-sticky a:hover,
+.toc-sticky a.active {
+  color: var(--dark);
+  border-left-color: var(--pop);
+  font-weight: 700;
+}
+.main-content { flex: 1; min-width: 0; }
+
+.note-box,
+.method-picker,
+.flowchart-container,
+.audit-list,
+.faq-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-small);
+}
+.note-box {
+  padding: 1.35rem 1.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.96rem;
+  border-left: 6px solid var(--pop);
+}
+.method-picker {
+  padding: 26px;
+  margin: 2rem 0;
+}
+.picker-question { margin-bottom: 1rem; font-weight: 700; color: var(--dark); }
+.picker-options { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.picker-label {
+  padding: 10px 15px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.94rem;
+  background: var(--surface-soft);
+  color: var(--muted);
+  font-weight: 600;
+}
+.picker-label input { display: none; }
+.picker-label:has(input:checked) {
+  background: var(--pop);
+  color: #fff;
+  border-color: var(--pop);
+}
+.picker-result,
+#picker-result {
+  display: none;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-weight: 700;
+}
+
+.code-wrapper { position: relative; margin: 1.8rem 0; }
+.code-wrapper pre {
+  background: var(--dark);
+  color: #f5f5f5;
+  padding: 24px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  border: 1px solid #000;
+  box-shadow: var(--shadow-small);
+}
+.code-wrapper code {
+  background: transparent;
+  color: inherit;
+  border: 0;
+  padding: 0;
+}
+.copy-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: #fff;
+  color: var(--dark);
+  border: 1px solid var(--border);
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.copy-btn:hover,
+.copy-btn.copied {
+  background: var(--pop);
+  border-color: var(--pop);
+  color: #fff;
+}
+
+.difficulty-meter {
+  display: inline-grid;
+  grid-template-columns: repeat(5, 13px);
+  gap: 6px;
+  margin: 0 0 1.4rem;
+  padding: 9px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+}
+.difficulty-meter span {
+  width: 13px;
+  height: 13px;
+  border-radius: 3px;
+  background: var(--border);
+}
+.difficulty-meter[data-level="1"] span:nth-child(-n+1),
+.difficulty-meter[data-level="2"] span:nth-child(-n+2),
+.difficulty-meter[data-level="3"] span:nth-child(-n+3),
+.difficulty-meter[data-level="4"] span:nth-child(-n+4),
+.difficulty-meter[data-level="5"] span:nth-child(-n+5) {
+  background: var(--pop);
+}
+
+.content-image {
+  margin: 2rem 0;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 10px;
+  box-shadow: var(--shadow-small);
+  overflow: hidden;
+}
+.content-image img,
+section > img,
+.saas-mockup img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: calc(var(--radius) - 6px);
+  filter: grayscale(100%) contrast(1.05);
+}
+.content-image.image-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.content-image.image-split img { height: 100%; object-fit: contain; background: var(--surface-soft); }
+
+.premium-band {
+  background: var(--dark);
+  color: #fff;
+  padding: 86px 0;
+  margin: 66px 0;
+  border-radius: 32px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.premium-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 42px;
+  align-items: center;
+}
+@media(min-width: 800px) { .premium-grid { grid-template-columns: 1.02fr 0.98fr; } }
+.premium-band h2 {
+  color: #fff;
+  border-bottom: 1px solid rgba(255,255,255,0.14);
+  margin-top: 0;
+}
+.premium-band p { color: #D8D8D8; }
+.premium-band .btn-outline {
+  border-color: #fff !important;
+  color: #fff !important;
+}
+.premium-band .btn-outline:hover {
+  color: var(--dark) !important;
+  background: #fff;
+}
+.signal-signature {
+  margin: 0 0 1.5rem;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: clamp(48px, 7.2vw, 92px);
+  line-height: 0.88;
+  letter-spacing: -0.06em;
+  color: #fff;
+  position: relative;
+  display: inline-block;
+}
+.signal-signature::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -12px;
+  height: 8px;
+  background: var(--pop);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.8s cubic-bezier(.16,.84,.44,1);
+}
+.signal-signature.in-view::after { transform: scaleX(1); }
+.saas-feature-list {
+  list-style: none;
+  margin-left: 0;
+  margin-bottom: 2rem;
+  display: grid;
+  gap: 12px;
+}
+.saas-feature-list li {
+  position: relative;
+  margin-bottom: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: #fff;
+  background: rgba(255,255,255,0.055);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  padding: 15px 15px 15px 44px;
+  overflow: hidden;
+}
+.saas-feature-list li::before {
+  content: "";
+  position: absolute;
+  left: 17px;
+  top: 20px;
+  width: 10px;
+  height: 10px;
+  background: var(--pop);
+  border-radius: 3px;
+}
+.saas-feature-list li::after {
+  content: "";
+  position: absolute;
+  left: 44px;
+  right: 15px;
+  bottom: 10px;
+  height: 3px;
+  background: var(--pop);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.28s ease;
+}
+.saas-feature-list li:hover::after { transform: scaleX(1); }
+.saas-mockup {
+  background: #0B0B0C !important;
+  border: 1px solid rgba(255,255,255,0.16) !important;
+  padding: 12px !important;
+  border-radius: 24px !important;
+  box-shadow: 0 28px 80px rgba(0,0,0,0.34) !important;
+}
+
+.compare-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 2rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-small);
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.compare-table th,
+.compare-table td {
+  padding: 17px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.compare-table th {
+  background: var(--dark);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 800;
+}
+.compare-table th:first-child { border-left: 6px solid var(--pop); }
+.compare-table .group-header td {
+  background: var(--surface-soft);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+.compare-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+.compare-table tbody tr:last-child td:first-child {
+  border-left: 6px solid var(--pop);
+}
+
+.flowchart-container {
+  padding: 26px;
+}
+.flow-step { display: none; text-align: center; padding: 20px; }
+.flow-step.active { display: block; animation: fadeIn 0.3s ease; }
+.flow-actions { display: flex; justify-content: center; gap: 14px; margin-top: 1rem; flex-wrap: wrap; }
+.flow-result {
+  background: var(--surface-soft);
+  padding: 18px;
+  border-radius: 14px;
+  border-left: 6px solid var(--pop);
+  text-align: left;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+.audit-list {
+  list-style: none;
+  margin: 0;
+  padding: 8px 24px;
+}
+.audit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.audit-item:last-child { border-bottom: none; }
+.audit-checkbox {
+  width: 22px;
+  height: 22px;
+  margin-top: 4px;
+  cursor: pointer;
+  accent-color: var(--pop);
+}
+.audit-text { flex: 1; transition: opacity 0.2s; }
+.audit-item.checked .audit-text { text-decoration: line-through; opacity: 0.58; }
+
+.faq-masonry {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: start;
+}
+@media(min-width: 768px) { .faq-masonry { grid-template-columns: 1fr 1fr; } }
+.faq-card {
+  padding: 0;
+  overflow: hidden;
+  border-left: 0 solid var(--pop);
+  transition: border-left-width 0.2s ease, box-shadow 0.2s ease;
+}
+.faq-card.is-open {
+  border-left-width: 6px;
+  box-shadow: var(--shadow);
+}
+.faq-card h3 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  letter-spacing: 0;
+}
+.faq-question {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 22px;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+.faq-card.is-open .faq-question { color: var(--dark); }
+.faq-icon {
+  flex: 0 0 auto;
+  color: var(--pop);
+  font-weight: 900;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+.faq-answer {
+  display: none;
+  padding: 0 22px 22px;
+  color: var(--muted);
+}
+.faq-card.is-open .faq-answer { display: block; }
+.faq-answer p { margin-bottom: 0; }
+
+footer {
+  background: var(--dark);
+  color: #BCBCBC;
+  padding: 68px 24px 44px;
+  font-size: 0.92rem;
+  margin-top: 40px;
+}
+.footer-grid {
+  max-width: var(--max-wide-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+@media(min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+.footer-brand { color: #fff; font-size: 1.18rem; }
+footer h4 { color: #fff !important; font-family: var(--font-body); letter-spacing: 0.02em; }
+footer a { color: #fff; text-decoration-color: rgba(255,255,255,0.3); }
+footer a:hover { color: #fff; text-decoration-color: var(--pop); }
+.footer-disclosure {
+  margin-top: 44px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255,255,255,0.16);
+  font-size: 0.82rem;
+  color: #AFAFAF;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.68s ease, transform 0.68s ease;
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+  .hero-editorial .container {
+    grid-template-columns: 1fr;
+  }
+  .hero-document-visual { min-height: 360px; }
+  .page-wrapper { padding: 26px 18px 0; }
+}
+
+@media (max-width: 768px) {
+  .nav-container { min-height: 66px; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 66px;
+    left: 14px;
+    right: 14px;
+    background: var(--surface);
+    flex-direction: column;
+    align-items: stretch;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+  }
+  .nav-links.active { display: flex; }
+  .nav-active-dot {
+    left: 0;
+    top: 28px;
+    bottom: auto;
+  }
+  .mobile-toggle { display: inline-grid; place-items: center; }
+  section { padding: 68px 0; }
+  .main-content > section::before {
+    left: 0;
+    right: auto;
+    top: 20px;
+    font-size: 40px;
+  }
+  .content-image.image-split { grid-template-columns: 1fr; }
+  .brand-text { gap: 0.22em; }
+  .site-brand { font-size: 0.95rem; }
+  .brand-mark { width: 36px; height: 36px; }
+}
+
+</style>
+</head>
+<body>
+<header id="site-header">
+<div class="nav-container">
+<div class="site-brand"><svg aria-label="Security themed shield and locked folder graphic" class="brand-mark" role="img" viewbox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+<rect fill="#1C1C1E" height="64" rx="18" width="64"></rect>
+<path d="M32 10L48 16V29C48 40.5 41.4 49.6 32 54C22.6 49.6 16 40.5 16 29V16L32 10Z" fill="#FAFAFA"></path>
+<path d="M32 15L43 19.2V29C43 37.5 38.6 44.2 32 48C25.4 44.2 21 37.5 21 29V19.2L32 15Z" fill="#E8343A"></path>
+<path d="M22 28H42V43H22V28Z" fill="#1C1C1E"></path>
+<path d="M27 28V24C27 21.2 29.2 19 32 19C34.8 19 37 21.2 37 24V28" fill="none" stroke="#FAFAFA" stroke-linecap="round" stroke-width="4"></path>
+<rect fill="#FAFAFA" height="6" rx="2" width="4" x="30" y="33"></rect>
+</svg><span class="brand-text"><span>Win7</span><span>Folder</span><span>Protect</span><span>Guide</span></span></div>
+<button aria-label="Toggle Menu" class="mobile-toggle" id="menu-btn">☰</button>
+<nav class="nav-links" id="main-nav"><span aria-hidden="true" class="nav-active-dot"></span>
+<a href="#overview">Overview</a>
+<a href="#native-methods">Native Methods</a>
+<a href="#software-method">Software Solutions</a>
+<a href="#troubleshooting">Troubleshooting</a>
+<a href="#faq">FAQ</a>
+<a class="btn btn-outline" href="#software-method">See Our Top Pick →</a>
+</nav>
+</div>
+</header>
+<section class="hero-editorial reveal">
+<div class="container"><div class="hero-copy">
+<div class="breadcrumb">Guides / Windows Security / Folder Locking</div>
+<h1>How to Lock a Folder in Windows 7 <span class="pop-word">Without Software</span></h1>
+<p>While modern Windows versions handle security differently, Windows 7 users still have distinct native options—and limitations—when it comes to folder privacy. This guide covers how to lock, hide, and encrypt your sensitive directories locally.</p>
+<div class="hero-meta">
+<span>Editorial Team</span>
+<span>•</span>
+<span>Updated for Legacy Support</span>
+<span>•</span>
+<span><span class="hero-stat-number">12</span> min read</span>
+</div>
+<div class="quick-answer">
+<span class="quick-answer-label">Quick Answer</span>
+<p>To lock a folder in Windows 7 without software, use a CMD batch script to create a password-prompted hidden folder. If you use Windows 7 Professional or Ultimate, you can right-click a folder and use native EFS (Encrypted File System). <strong>Home Premium users do not have EFS</strong> and must rely on batch scripts or dedicated desktop software.</p>
+</div>
+</div><div aria-hidden="true" class="hero-document-visual"></div></div>
+</section>
+<div class="page-wrapper">
+<!-- Signature Detail: Sticky TOC -->
+<aside class="sidebar-toc">
+<nav class="toc-sticky" id="sticky-toc">
+<h4>Contents</h4>
+<ul>
+<li><a href="#overview">Before You Start</a></li>
+<li><a href="#native-methods">Method 1: CMD Batch Script</a></li>
+<li><a href="#efs-method">Method 2: Native EFS</a></li>
+<li><a href="#software-method">Method 3: Dedicated Software</a></li>
+<li><a href="#comparison">Methods Comparison</a></li>
+<li><a href="#troubleshooting">Troubleshooting &amp; Recovery</a></li>
+<li><a href="#verification">Verification Audit</a></li>
+<li><a href="#eol-notice">Windows 7 EOL Notice</a></li>
+<li><a href="#faq">FAQ</a></li>
+</ul>
+</nav>
+</aside>
+<main class="main-content">
+<section class="reveal" id="overview">
+<h2>Before You Start: Windows 7 Edition Compatibility</h2>
+<p>Before modifying system files or creating scripts, you must verify which version of Windows 7 you are running. The built-in tools available to you change entirely based on your license.</p>
+<div class="note-box">
+<strong>How to check:</strong> Click Start, right-click on "Computer", and select "Properties". Look under "Windows edition".
+        </div>
+<figure class="content-image reveal"><img alt="Windows folder protection and security compatibility overview" src="https://i.ibb.co/RTVcfd3m/folder-protect-for-windows.jpg"/></figure>
+<!-- Interactive: Method Picker -->
+<div class="method-picker reveal" id="method-picker-tool">
+<h3>Which method should you use?</h3>
+<p class="picker-question">1. What version of Windows 7 are you using?</p>
+<div class="picker-options" id="os-options">
+<label class="picker-label"><input name="os" type="radio" value="home"/> Home Premium / Basic</label>
+<label class="picker-label"><input name="os" type="radio" value="pro"/> Professional / Ultimate</label>
+</div>
+<p class="picker-question">2. How sensitive is the data?</p>
+<div class="picker-options" id="data-options">
+<label class="picker-label"><input name="data" type="radio" value="low"/> Basic Privacy (Hiding from family)</label>
+<label class="picker-label"><input name="data" type="radio" value="high"/> High Security (Financials/Work)</label>
+</div>
+<div id="picker-result"></div>
+</div><figure class="content-image reveal"><img alt="Windows 7 File Explorer view for checking protected folder locations and folder privacy settings" decoding="async" loading="lazy" src="https://i.ibb.co/35v0S8cp/Windows-file-explorer.jpg"/></figure>
+</section>
+<section class="bg-alt reveal" id="native-methods">
+<h2>How to Lock a Folder in Windows 7 Using CMD (Batch Script)</h2><div aria-label="Difficulty level 3 of 5" class="difficulty-meter" data-level="3"><span></span><span></span><span></span><span></span><span></span></div>
+<p>If you don't have Professional/Ultimate editions, or simply want a quick way to lock a folder in Windows 7 without software, the traditional <a href="https://blog.gitguardian.com/secrets-at-the-command-line/" rel="noopener noreferrer" target="_blank">Command Prompt (CMD)</a> batch script is the most common workaround. It creates a folder that disappears and requires a <a href="https://maketecheasier.com/password-lock-folder-windows/" rel="noopener noreferrer" target="_blank">password</a> in a terminal window to reappear.</p>
+<h3>Step-by-Step Instructions</h3>
+<ol>
+<li>Navigate to where you want the locked folder to live (e.g., your Documents).</li>
+<li>Right-click empty space, choose <strong>New</strong> &gt; <strong>Text Document</strong>.</li>
+<li>Open the new text document and paste the code below.</li>
+</ol>
+<!-- Interactive: Copy Code Block -->
+<div class="code-wrapper">
+<button aria-label="Copy code" class="copy-btn" id="copy-btn">Copy Code</button>
+<pre><code id="batch-code">cls
+@ECHO OFF
+title Folder Locker
+if EXIST "Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}" goto UNLOCK
+if NOT EXIST Locker goto MDLOCKER
+:CONFIRM
+echo Are you sure u want to Lock the folder(Y/N)
+set/p "cho=&gt;"
+if %cho%==Y goto LOCK
+if %cho%==y goto LOCK
+if %cho%==n goto END
+if %cho%==N goto END
+echo Invalid choice.
+goto CONFIRM
+:LOCK
+ren Locker "Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}"
+attrib +h +s "Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}"
+echo Folder locked
+goto End
+:UNLOCK
+echo Enter password to Unlock folder
+set/p "pass=&gt;"
+if NOT %pass%==YOUR-PASSWORD-HERE goto FAIL
+attrib -h -s "Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}"
+ren "Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}" Locker
+echo Folder Unlocked successfully
+goto End
+:FAIL
+echo Invalid password
+goto end
+:MDLOCKER
+md Locker
+echo Locker created successfully
+goto End
+:End</code></pre>
+</div><figure class="content-image reveal"><img alt="Command Prompt keyboard workflow for creating a Windows 7 folder lock batch script" decoding="async" loading="lazy" src="https://i.ibb.co/vpWzKVd/computer-keyboard.jpg"/></figure>
+<ol start="4">
+<li>Find the line that says <code>if NOT %pass%==YOUR-PASSWORD-HERE goto FAIL</code>.</li>
+<li>Replace <strong>YOUR-PASSWORD-HERE</strong> with your desired password.</li>
+<li>Click <strong>File &gt; Save As</strong>. Name the file <code>FolderLock.bat</code> and change "Save as type" to <strong>All Files</strong>.</li>
+<li>Double-click the new <code>FolderLock.bat</code> file. A folder named "Locker" will appear. Put your files inside.</li>
+<li>Double-click the <code>.bat</code> file again, type <strong>Y</strong>, and hit Enter. The folder will vanish.</li>
+</ol>
+<div class="note-box">
+<strong>Security Warning:</strong> This method is not true encryption. Anyone who right-clicks the batch file and clicks "Edit" can view your password in plain text. It is only suitable for basic privacy on a shared home computer.
+        </div><figure class="content-image reveal"><img alt="Executable vault metaphor showing the limits of script-based folder hiding in Windows 7" decoding="async" loading="lazy" src="https://i.ibb.co/zWNmXR90/Executable-Vault-Metaphor.jpg"/></figure>
+</section>
+<section class="reveal" id="efs-method">
+<h2>Method 2: Using Built-in EFS (Pro / Ultimate Only)</h2><div aria-label="Difficulty level 2 of 5" class="difficulty-meter" data-level="2"><span></span><span></span><span></span><span></span><span></span></div>
+<p>If you have Windows 7 Professional or Ultimate, you have access to the <a href="https://proprivacy.com/guides/encrypt-files-windows" rel="noopener noreferrer" target="_blank">Encrypting File System (EFS)</a>. This ties folder access to your specific Windows user account.</p>
+<ol>
+<li>Right-click the folder you want to secure and select <strong>Properties</strong>.</li>
+<li>On the General tab, click the <strong>Advanced...</strong> button.</li>
+<li>Check the box that says <strong>Encrypt contents to secure data</strong>.</li>
+<li>Click OK, then Apply. Windows will ask if you want to apply changes to this folder only, or subfolders and files. Select subfolders and files.</li>
+</ol><figure class="content-image reveal"><img alt="Encrypted data vault illustration for Windows 7 EFS folder protection" decoding="async" loading="lazy" src="https://i.ibb.co/bMzYGK6K/Data-Protection-Vault.jpg"/></figure>
+<p>The folder name will turn green. It is now encrypted. You do not need to enter a password to open it, as long as you are logged into your Windows user account. If another user logs in, they will be denied access.</p>
+<figure class="content-image reveal"><img alt="Advanced data locking and system encryption visualization" src="https://i.ibb.co/QFbN84jx/folder-lock-10-social-media-ad-all-new.jpg"/></figure>
+</section>
+<!-- PREMIUM SAAS MOMENT -->
+<section class="premium-band reveal" id="software-method">
+<div class="container-wide premium-grid">
+<div class="saas-copy">
+<span class="quick-answer-label">The Tool We Recommend</span><div class="signal-signature reveal"><a href="https://cloudstorageinfo.org/folder-lock-review" rel="noopener noreferrer" target="_blank">Folder Lock</a></div>
+<h2>The Most Secure Approach: Dedicated Folder Lock Software</h2><div aria-label="Difficulty level 1 of 5" class="difficulty-meter" data-level="1"><span></span><span></span><span></span><span></span><span></span></div>
+<p>Because Windows 7 native tools are either easily bypassed (batch scripts) or limited by OS edition (EFS), third-party software remains the most reliable way to enforce AES-256 encryption on a specific folder.</p>
+<p>Of all the legacy-compatible tools we reviewed, we recommend <strong>Folder Lock</strong>. It fully supports Windows 7 (32-bit and 64-bit) and bridges the gap where native tools fail.</p>
+<ul class="saas-feature-list">
+<li>Works on all Windows 7 editions (Home, Pro, Ultimate).</li>
+<li>Implements true <a href="https://psbios.com/file-encryption-explained/" rel="noopener noreferrer" target="_blank">AES 256-bit</a> military-grade encryption rather than simple attribute hiding.</li>
+<li>Creates portable, self-decrypting lockers for <a href="https://techleez.co.uk/why-you-should-password-protect-your-usb-drive/" rel="noopener noreferrer" target="_blank">USB flash drives</a> and external hard disks.</li>
+<li>Syncs your secured files seamlessly across Mac, iOS, and Android devices.</li>
+<li>Includes secure digital wallets for passwords and permanent file shredding capabilities.</li>
+</ul><figure class="content-image reveal"><img alt="Folder Lock 10 protect folders screen showing file safeguard controls" decoding="async" loading="lazy" src="https://i.ibb.co/pj61MNWJ/folder-lock-10-screenshot-safeguard-protect-folders.png"/></figure>
+<p>
+<strong>Looking for something lighter?</strong> If you prefer the instant speed of native folder hiding without the overhead of heavy encryption, the developer also offers <em>Folder Lock 7 Lite</em>. It provides a clean, secure interface for instant folder locking without altering the underlying data.
+            </p>
+<div>
+<a class="btn btn-filled" href="https://www.newsoftwares.net/download/folderlock10-en/folder-lock-en.exe" rel="noopener noreferrer" target="_blank">Try Folder Lock Free →</a>
+<a class="btn btn-outline" href="https://store.newsoftwares.net/?add=fl10" rel="noopener noreferrer" target="_blank">View Full Version Pricing</a>
+</div>
+</div>
+<div class="saas-mockup">
+<figure class="content-image reveal"><img alt="Folder Lock 10 encrypted locker interface showing secured files and protection status" src="https://i.ibb.co/Q713yG79/Folder-Lock-locker.jpg"/></figure>
+</div><figure class="content-image reveal"><img alt="Folder Lock 10 software boxshot for Windows folder encryption and locker protection" decoding="async" loading="lazy" src="https://i.ibb.co/xSFPPmSR/folder-lock-10-boxshot-new-4.png"/></figure>
+</div>
+</section>
+<section class="reveal" id="comparison">
+<h2>Methods Comparison</h2>
+<div class="compare-table-wrapper reveal">
+<table class="compare-table">
+<thead>
+<tr>
+<th>Method</th>
+<th>Security Level</th>
+<th>Ease of Use</th>
+<th>Requirements</th>
+</tr>
+</thead>
+<tbody>
+<tr class="group-header">
+<td colspan="4">Native Windows 7 Options</td>
+</tr>
+<tr>
+<td><strong>CMD Batch Script</strong></td>
+<td>Low (Easily bypassed)</td>
+<td>Moderate</td>
+<td>None (Works on all editions)</td>
+</tr>
+<tr>
+<td><strong>EFS Encryption</strong></td>
+<td>High</td>
+<td>Easy</td>
+<td>Windows 7 Pro/Ultimate only</td>
+</tr>
+<tr class="group-header">
+<td colspan="4">Third-Party Solutions</td>
+</tr>
+<tr>
+<td><strong><a href="https://www.newsoftwares.net/download/folderlock7-en/folder-lock-en.exe" rel="noopener noreferrer" target="_blank">Folder Lock 7 Lite</a></strong></td>
+<td>Moderate (Hiding/Locking only)</td>
+<td>Very Easy</td>
+<td>Download Required</td>
+</tr>
+<tr>
+<td><strong>Folder Lock (Full Version)</strong></td>
+<td>Highest (AES-256 + Sync)</td>
+<td>Easy</td>
+<td>Download Required</td>
+</tr>
+</tbody>
+</table>
+</div><figure class="content-image reveal"><img alt="Windows encryption software comparison visual for folder locking methods" decoding="async" loading="lazy" src="https://i.ibb.co/K149f6r/best-windows-encryption-software.jpg"/></figure>
+</section>
+<section class="bg-alt reveal" id="troubleshooting">
+<h2>Troubleshooting &amp; Owner Recovery</h2>
+<p>If you've lost access to your secured files, do not attempt to download "cracking" software, as these often contain malware. Follow legitimate owner-verification steps.</p>
+<figure class="content-image reveal"><img alt="Data recovery and proactive file protection poster" src="https://i.ibb.co/C3dwdr7Z/folder-lock-10-promotional-poster-newsoftwares.jpg"/></figure>
+<!-- Interactive: Troubleshooting Flowchart -->
+<div class="flowchart-container reveal" id="recovery-flowchart">
+<div class="flow-step active" id="step-1">
+<h4>What method did you use to lock the folder?</h4>
+<div class="flow-actions">
+<button class="btn btn-outline" onclick="flowStep('step-cmd')">CMD Batch Script</button>
+<button class="btn btn-outline" onclick="flowStep('step-efs')">Windows EFS (Green Text)</button>
+<button class="btn btn-outline" onclick="document.getElementById('software-method').scrollIntoView({behavior:'smooth'});">Dedicated Software</button>
+</div>
+</div>
+<div class="flow-step" id="step-cmd">
+<h4>CMD Script Recovery</h4>
+<div class="flow-result">
+<p>Right-click the <code>.bat</code> file and select <strong>Edit</strong>. The file will open in Notepad. Look for the line: <code>if NOT %pass%==YOURPASSWORD goto FAIL</code>. Your password is right there in plain text.</p>
+<button class="btn btn-outline" onclick="flowStep('step-1')">Start Over</button>
+</div>
+</div>
+<div class="flow-step" id="step-efs">
+<h4>EFS Recovery</h4>
+<div class="method-picker reveal" id="method-picker-tool-2">
+<h3>Which method should you use?</h3>
+<p class="picker-question">1. What version of Windows 7 are you using?</p>
+<div class="picker-options" id="os-options-2">
+<label class="picker-label"><input name="os" type="radio" value="home"/> Home Premium / Basic</label>
+<label class="picker-label"><input name="os" type="radio" value="pro"/> Professional / Ultimate</label>
+</div>
+<p class="picker-question">2. How sensitive is the data?</p>
+<div class="picker-options" id="data-options-2">
+<label class="picker-label"><input name="data" type="radio" value="low"/> Basic Privacy (Hiding from family)</label>
+<label class="picker-label"><input name="data" type="radio" value="high"/> High Security (Work / Shared Office)</label>
+</div>
+<div class="picker-result" id="picker-result-2"></div>
+</div>
+</div></div><figure class="content-image reveal"><img alt="Owner recovery and data unlocking illustration for legitimate folder access troubleshooting" decoding="async" loading="lazy" src="https://i.ibb.co/gLVNxgq4/Accessing-Data-Unlocking.jpg"/></figure></section>
+<section class="reveal" id="verification">
+<h2>Verification Audit: Is Your Folder Truly Locked?</h2>
+<p>Use this interactive checklist to verify you haven't left any loopholes open on your Windows 7 machine.</p>
+<!-- Interactive: Audit Checklist -->
+<ul class="audit-list reveal">
+<li class="audit-item">
+<input class="audit-checkbox" type="checkbox"/>
+<div class="audit-text"><strong>Hidden Files Checked:</strong> Open Folder Options in Control Panel and select "Show hidden files, folders, and drives". Verify your locked folder isn't simply sitting visible.</div>
+</li>
+<li class="audit-item">
+<input class="audit-checkbox" type="checkbox"/>
+<div class="audit-text"><strong>Search Indexing Disabled:</strong> Ensure Windows Search index isn't capturing the contents of your locked folder and displaying them in Start Menu searches.</div>
+</li>
+<li class="audit-item">
+<input class="audit-checkbox" type="checkbox"/>
+<div class="audit-text"><strong>Recent Files Cleared:</strong> Open Microsoft Word or Excel to ensure "Recent Documents" doesn't contain shortcuts directly bypassing your lock.</div>
+</li>
+<li class="audit-item">
+<input class="audit-checkbox" type="checkbox"/>
+<div class="audit-text"><strong>Tested from another User Account:</strong> Create a Guest account on Windows 7 and attempt to access the directory to confirm permissions work.</div>
+</li>
+</ul>
+<figure class="content-image reveal"><img alt="Audit trail and data logging illustration for verifying folder security controls" decoding="async" loading="lazy" src="https://i.ibb.co/W4JBsgpd/audit-trail-data-logging.jpg"/></figure></section>
+<section class="reveal" id="eol-notice">
+<h2>Important: <a href="https://linustechtips.com/topic/103817-help-set-up-bitlocker-windows-7-and-81-help/" rel="noopener noreferrer" target="_blank">Windows 7</a> End-of-Life Notice</h2>
+<div class="note-box">
+<strong>Security Advisory:</strong> Microsoft ended extended support for Windows 7 on January 14, 2020. Because the OS no longer receives security patches, native mechanisms like EFS are vulnerable to modern exploits. If you must keep a Windows 7 machine active, relying on third-party AES-256 encryption (rather than OS-level protections) is strongly recommended.
+        </div><figure class="content-image reveal"><img alt="Windows security tools illustration for legacy operating system protection guidance" decoding="async" loading="lazy" src="https://i.ibb.co/84gBFQ3x/windows-security-tools-microsoft-defender-and-built-in-features.jpg"/></figure>
+<figure class="content-image reveal"><img alt="Proactive data security warning for legacy operating systems like Windows 7" src="https://i.ibb.co/V00KXtpW/folder-lock-10-social-media-ad-proactive-data-security.jpg"/></figure>
+</section>
+<section class="bg-alt reveal" id="faq">
+<h2>Frequently Asked Questions</h2>
+<figure class="content-image reveal"><img alt="Lock screen security visual for frequently asked Windows folder protection questions" decoding="async" loading="lazy" src="https://i.ibb.co/xtZC7X09/lock-screen-security.jpg"/></figure><div class="faq-masonry">
+<div class="faq-card reveal">
+<h3><button aria-controls="faq-answer-1" aria-expanded="false" class="faq-question" type="button"><span>How to lock a folder in Windows 7 without software?</span><span aria-hidden="true" class="faq-icon">+</span></button></h3>
+<div class="faq-answer" id="faq-answer-1"><p>You can use a batch script (.bat file) to hide a folder and require a password prompt in the command line to reveal it. However, this is easily bypassed by anyone who opens the script in a text editor.</p></div>
+</div>
+<div class="faq-card reveal">
+<h3><button aria-controls="faq-answer-2" aria-expanded="false" class="faq-question" type="button"><span>Does Windows 7 have built-in folder encryption?</span><span aria-hidden="true" class="faq-icon">+</span></button></h3>
+<div class="faq-answer" id="faq-answer-2"><p>Yes, but only on Professional, Enterprise, and Ultimate editions. It is called EFS (Encrypting File System). Windows 7 Home Premium and Basic do not have EFS.</p></div>
+</div>
+<div class="faq-card reveal">
+<h3><button aria-controls="faq-answer-3" aria-expanded="false" class="faq-question" type="button"><span>Is Windows 7 folder lock different from Windows 10?</span><span aria-hidden="true" class="faq-icon">+</span></button></h3>
+<div class="faq-answer" id="faq-answer-3"><p>Yes. Windows 10 heavily integrates BitLocker and modern Device Encryption, moving away from legacy EFS. However, third-party software like Folder Lock generally functions identically across both operating systems.</p></div>
+</div>
+<div class="faq-card reveal">
+<h3><button aria-controls="faq-answer-4" aria-expanded="false" class="faq-question" type="button"><span>Can I access my locked Windows 7 folders on a Mac or smartphone?</span><span aria-hidden="true" class="faq-icon">+</span></button></h3>
+<div class="faq-answer" id="faq-answer-4"><p>You cannot do this using native Windows 7 tools (like EFS or CMD scripts). However, if you use dedicated tools like Folder Lock, you can create encrypted cloud backups that seamlessly sync to companion macOS, iPhone, and Android applications.</p></div>
+</div>
+<div class="faq-card reveal">
+<h3><button aria-controls="faq-answer-5" aria-expanded="false" class="faq-question" type="button"><span>How do I know if a folder is truly locked and not just hidden?</span><span aria-hidden="true" class="faq-icon">+</span></button></h3>
+<div class="faq-answer" id="faq-answer-5"><p>If you can reveal the folder simply by checking "Show hidden files" in Folder Options, it is only hidden. True locking requires encryption, where opening the file returns an "Access Denied" error or requires a password.</p></div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<footer>
+<div class="footer-grid">
+<div>
+<div class="footer-brand"><svg aria-label="Security themed shield and locked folder graphic" class="brand-mark" role="img" viewbox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+<rect fill="#1C1C1E" height="64" rx="18" width="64"></rect>
+<path d="M32 10L48 16V29C48 40.5 41.4 49.6 32 54C22.6 49.6 16 40.5 16 29V16L32 10Z" fill="#FAFAFA"></path>
+<path d="M32 15L43 19.2V29C43 37.5 38.6 44.2 32 48C25.4 44.2 21 37.5 21 29V19.2L32 15Z" fill="#E8343A"></path>
+<path d="M22 28H42V43H22V28Z" fill="#1C1C1E"></path>
+<path d="M27 28V24C27 21.2 29.2 19 32 19C34.8 19 37 21.2 37 24V28" fill="none" stroke="#FAFAFA" stroke-linecap="round" stroke-width="4"></path>
+<rect fill="#FAFAFA" height="6" rx="2" width="4" x="30" y="33"></rect>
+</svg><span class="brand-text"><span>Win7</span><span>Folder</span><span>Protect</span><span>Guide</span></span></div>
+<p>Providing legacy and modern local security guidance. This site helps users secure their sensitive files effectively.</p>
+</div>
+<div>
+<h4>Resources</h4>
+<ul>
+<li><a href="#overview">Guide Overview</a></li>
+<li><a href="#native-methods">CMD Tutorials</a></li>
+<li><a href="#troubleshooting">Recovery Steps</a></li>
+<li><a href="#faq">FAQ</a></li>
+</ul>
+</div>
+<div>
+<h4>Legal &amp; Developer</h4>
+<ul>
+<li><a href="#">Privacy Policy</a></li>
+<li><a href="#">Terms of Use</a></li>
+<li><a href="https://www.newsoftwares.net" rel="noopener noreferrer" target="_blank">NewSoftwares.net</a></li>
+</ul>
+</div>
+</div>
+<div class="container-wide">
+<div class="footer-disclosure">
+        This site operates as an independent editorial resource. Some links may earn a referral commission at no cost to you. Product recommendations reflect editorial judgment and independent assessment. Folder Lock is developed by <a href="https://www.newsoftwares.net" rel="noopener noreferrer" target="_blank">NewSoftwares.net</a>. © 2026 Win7FolderProtect Guide.
+      </div>
+</div>
+</footer>
+<!-- Schema Data -->
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "How to Lock a Folder in Windows 7 Without Software",
+    "description": "The complete guide to locking folders in Windows 7. Compare native CMD methods, EFS encryption, and dedicated software solutions."
+  }
+  </script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Lock a Folder in Windows 7 Using a CMD Script",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "text": "Right-click empty space, choose New > Text Document."
+      },
+      {
+        "@type": "HowToStep",
+        "text": "Paste the batch script code into the document."
+      },
+      {
+        "@type": "HowToStep",
+        "text": "Replace YOUR-PASSWORD-HERE with your desired password."
+      },
+      {
+        "@type": "HowToStep",
+        "text": "Save the file as FolderLock.bat."
+      },
+      {
+        "@type": "HowToStep",
+        "text": "Double-click the .bat file to generate the Locker folder, add your files, and double-click again to lock."
+      }
+    ]
+  }
+  </script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How to lock a folder in Windows 7 without software?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can use a batch script (.bat file) to hide a folder and require a password prompt in the command line to reveal it."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Windows 7 have built-in folder encryption?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, but only on Professional, Enterprise, and Ultimate editions through the Encrypting File System (EFS)."
+        }
+      }
+    ]
+  }
+  </script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "NewSoftwares.net",
+    "url": "https://www.newsoftwares.net"
+  }
+  </script>
+<!-- Functionality Scripts -->
+<script defer="">
+
+document.addEventListener('DOMContentLoaded', () => {
+  const header = document.getElementById('site-header');
+  const menuBtn = document.getElementById('menu-btn');
+  const navLinks = document.getElementById('main-nav');
+  const navDot = document.querySelector('.nav-active-dot');
+  const headerNavItems = document.querySelectorAll('#main-nav a[href^="#"]:not(.btn)');
+  const tocItems = document.querySelectorAll('.toc-sticky a');
+  const sections = document.querySelectorAll('section[id]');
+
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 10);
+  });
+
+  if (menuBtn && navLinks) {
+    menuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+  }
+
+  function moveNavDot(activeLink) {
+    if (!navDot || !activeLink || !navLinks) return;
+    const linkRect = activeLink.getBoundingClientRect();
+    const navRect = navLinks.getBoundingClientRect();
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    if (isMobile) {
+      navDot.style.transform = `translateY(${activeLink.offsetTop - 8}px)`;
+    } else {
+      const x = linkRect.left - navRect.left + (linkRect.width / 2) - 4;
+      navDot.style.transform = `translateX(${x}px)`;
+    }
+    navDot.style.opacity = '1';
+  }
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const id = entry.target.getAttribute('id');
+
+      tocItems.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+      });
+
+      headerNavItems.forEach(link => {
+        const isActive = link.getAttribute('href') === `#${id}`;
+        link.classList.toggle('active', isActive);
+        if (isActive) moveNavDot(link);
+      });
+    });
+  }, { root: null, rootMargin: '-20% 0px -60% 0px', threshold: 0 });
+
+  sections.forEach(sec => sectionObserver.observe(sec));
+  window.addEventListener('resize', () => {
+    const active = document.querySelector('#main-nav a.active');
+    if (active) moveNavDot(active);
+  });
+
+  document.querySelectorAll('.method-picker').forEach((picker) => {
+    const osRadios = picker.querySelectorAll('input[name="os"]');
+    const dataRadios = picker.querySelectorAll('input[name="data"]');
+    const pickerResult = picker.querySelector('#picker-result, .picker-result');
+
+    function evaluatePicker() {
+      let osVal = picker.querySelector('input[name="os"]:checked')?.value;
+      let dataVal = picker.querySelector('input[name="data"]:checked')?.value;
+      if (osVal && dataVal && pickerResult) {
+        pickerResult.style.display = 'block';
+        if (dataVal === 'high') {
+          pickerResult.innerHTML = "Recommendation: <span style='color:var(--pop)'>Dedicated Software (Folder Lock)</span>. Your data is too sensitive for native workarounds.";
+        } else if (osVal === 'pro' && dataVal === 'low') {
+          pickerResult.innerHTML = "Recommendation: <span style='color:var(--pop)'>Native EFS</span>. It's built into your OS and sufficient for basic privacy.";
+        } else {
+          pickerResult.innerHTML = "Recommendation: <span style='color:var(--pop)'>CMD Batch Script</span>. Fine for hiding casual files from family on Home edition.";
+        }
+      }
+    }
+
+    osRadios.forEach(r => r.addEventListener('change', evaluatePicker));
+    dataRadios.forEach(r => r.addEventListener('change', evaluatePicker));
+  });
+
+  const copyBtn = document.getElementById('copy-btn');
+  const batchCode = document.getElementById('batch-code');
+  if (copyBtn && batchCode) {
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(batchCode.innerText).then(() => {
+        copyBtn.innerText = "Copied!";
+        copyBtn.classList.add('copied');
+        setTimeout(() => {
+          copyBtn.innerText = "Copy Code";
+          copyBtn.classList.remove('copied');
+        }, 2000);
+      });
+    });
+  }
+
+  document.querySelectorAll('.audit-checkbox').forEach(box => {
+    box.addEventListener('change', function() {
+      this.closest('.audit-item').classList.toggle('checked', this.checked);
+    });
+  });
+
+  document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', () => {
+      const card = button.closest('.faq-card');
+      const icon = button.querySelector('.faq-icon');
+      const isOpen = card.classList.toggle('is-open');
+      button.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      if (icon) icon.textContent = isOpen ? '−' : '+';
+    });
+  });
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+  document.querySelectorAll('.reveal, .signal-signature').forEach(el => revealObserver.observe(el));
+});
+
+function flowStep(stepId) {
+  document.querySelectorAll('.flow-step').forEach(step => {
+    step.classList.remove('active');
+  });
+  const target = document.getElementById(stepId);
+  if (target) target.classList.add('active');
+}
+
+</script>
+</body>
+</html>
