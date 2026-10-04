@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://how-to-lock-a-folder-in-windows-7-without-software.vercel.app/sitemap.xml
